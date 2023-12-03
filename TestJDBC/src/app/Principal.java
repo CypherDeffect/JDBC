@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.ProdutoDAO;
+import db.DbException;
 import modelo.Produto;
 
 public class Principal {
@@ -17,16 +20,41 @@ public class Principal {
 		
 		ProdutoDAO dao = new ProdutoDAO();
 		
-/*		Produto prod = new Produto(null, "TV modificada", 
-								   Date.valueOf("2023-10-31"),
-								   51,
-								   new BigDecimal("123.45"));
-		prod.setIdProd(5);
-		dao.alterar(prod);
-		dao.adicionar(prod);
-		
-		dao.excluir(5);
-*/
+		Produto pdt  = new Produto(null, 
+									"Tablet",
+									Date.valueOf("2023-12-25"),
+									10,
+									new BigDecimal("25999.99"));
+
+		try {
+			if (dao.excluir(19)) {
+				System.out.println("Excluindo afetada com sucesso");
+			} else {
+				System.out.println("Registro não excluído!");
+			}
+		} catch (DbException e) {
+			System.out.println(e.getMessage());
+		}
+		}
+		pdt.setIdProd(8);
+		Map<String, Integer> retorno = new HashMap<>();
+
+		try {
+			retorno = dao.salvar(pdt);
+
+			System.out.println(retorno.get("afetados").toString() + " registro(s) afetado(s)");
+			if (retorno.get("chave") != null) {
+				System.out.println("Novo ID gerado: " + retorno.get("chave"));
+			}
+		} catch (DbException e) {
+			System.out.println(e.getMessage());
+		}
+
+		}
+
+
+	private ProdutoDAO dao;
+
 		
 		List<Produto> lista = dao.listarTodos();
 		

@@ -1,0 +1,16 @@
+package dao;
+
+import java.util.List;
+import java.util.Map;
+
+import modelo.Produto;
+
+public interface IProdutoDAO {
+	Map<String, Integer> salvar(Produto p);
+	boolean excluir(Integer id);
+	List<Produto> listarTodos();
+	Produto buscarPorId(Integer id0);
+	List<Produto> buscarPorNome(String nome);
+	int getNumeroRegistros();
+
+}
